@@ -5,6 +5,10 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MailModule } from './mail/mail.module';
 import { MailEntities } from './mail/entities/mail.entities';
+import { AuthModule } from './auth/auth.module';
+import { UserModule } from './user/user.module';
+import { EmailtemplateModule } from './emailtemplate/emailtemplate.module';
+import { Emailtemplate } from './emailtemplate/entities/emailtemplate.entity';
 
 @Module({
   imports: [
@@ -23,11 +27,18 @@ import { MailEntities } from './mail/entities/mail.entities';
         logging: configService.get<boolean>('DB_LOGGING'),
         database: configService.get('DB_NAME'),
         // entities: [__dirname + '/**/*.entity{.ts,.js}'],
-        entities:[MailEntities],
+        entities:[MailEntities,Emailtemplate],
       }),
     }),
 
     MailModule,
+
+    AuthModule,
+
+    UserModule,
+
+    EmailtemplateModule,
+
   ],
   controllers: [AppController],
   providers: [AppService],

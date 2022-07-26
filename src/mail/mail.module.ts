@@ -21,11 +21,20 @@ import { MailEntities } from './entities/mail.entities';
           },
         },
         defaults: {
-          from: 'alokasha7620@gmail.com',
+          from: config.get('EMAIL_ID'),
         },
+        // preview: true,
         template: {
           // dir: join(__dirname, './templates'),
-          adapter: new HandlebarsAdapter(),
+          adapter: new HandlebarsAdapter(
+            undefined, {
+            inlineCssEnabled: true,
+            inlineCssOptions: {
+              url: ' ',
+              preserveMediaQueries: true,
+            },
+          }
+          ),
           options: {
             strict: false,
           },

@@ -30,22 +30,8 @@ export class MailService {
       .sendMail({
         to: createMailDto.email,
         subject: createMailDto.subject,
-        // template: "src/templates/email.hbs",
-        html: `<html lang='en'>
-                <head>
-                    <meta charset='UTF-8' />
-                    <meta http-equiv='X-UA-Compatible' content='IE=edge' />
-                    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
-                    <title>Document</title>
-                </head>
-                <body>
-                    <h3>
-                      Hi  ${createMailDto.name}
-                    </h3>
-                    <p>Subject : ${createMailDto.subject}</p>
-                    <p>${createMailDto.template}</p>
-                </body>
-              </html>`,
+        // template: "src/templates/email.hbs", //fro send static template
+        html:`${createMailDto.template}`,      //to send dynamic template
         context: {
           name: createMailDto.name,
         },
