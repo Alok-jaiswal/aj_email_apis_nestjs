@@ -12,7 +12,13 @@ import { Emailtemplate } from './emailtemplate/entities/emailtemplate.entity';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true, envFilePath: ['.local.env'] }),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: [
+        // '.local.env',
+        '.prod.env',
+      ],
+    }),
 
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -27,7 +33,7 @@ import { Emailtemplate } from './emailtemplate/entities/emailtemplate.entity';
         logging: configService.get<boolean>('DB_LOGGING'),
         database: configService.get('DB_NAME'),
         // entities: [__dirname + '/**/*.entity{.ts,.js}'],
-        entities:[MailEntities,Emailtemplate],
+        entities: [MailEntities, Emailtemplate],
       }),
     }),
 
@@ -38,7 +44,6 @@ import { Emailtemplate } from './emailtemplate/entities/emailtemplate.entity';
     UserModule,
 
     EmailtemplateModule,
-
   ],
   controllers: [AppController],
   providers: [AppService],
