@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CreateEmailtemplateDto } from './dto/create-emailtemplate.dto';
-import { UpdateEmailtemplateDto } from './dto/update-emailtemplate.dto';
-import { Emailtemplate } from './entities/emailtemplate.entity';
+import { CreateEmailtemplateDto } from '../dto/create-emailtemplate.dto';
+import { UpdateEmailtemplateDto } from '../dto/update-emailtemplate.dto';
+import { Emailtemplate } from '../../../database/entities/emailtemplate.entity';
 
 @Injectable()
 export class EmailtemplateService {

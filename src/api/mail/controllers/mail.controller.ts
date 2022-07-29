@@ -1,4 +1,4 @@
-import { CreateMailDto } from './dto/create-mail.dto';
+import { CreateMailDto } from '../dto/create-mail.dto';
 import {
   Body,
   Controller,
@@ -8,12 +8,15 @@ import {
   Post,
   ValidationPipe,
 } from '@nestjs/common';
-import { MailService } from './mail.service';
+import { MailService } from '../services/mail.service';
+import {ApiTags} from '@nestjs/swagger';
+
 
 @Controller('mail')
+@ApiTags('mail')
 export class MailController {
   constructor(private readonly mailService: MailService) {}
-
+  
   @Post('/send')
   async sendEmail(@Body(ValidationPipe) createMailDto: CreateMailDto) {
     const test = await this.mailService.sendDyMail(createMailDto);
@@ -40,3 +43,7 @@ export class MailController {
     return delMailId;
   }
 }
+function AddTag(arg0: string) {
+  throw new Error('Function not implemented.');
+}
+

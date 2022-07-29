@@ -3,9 +3,9 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { MailController } from './mail.controller';
-import { MailService } from './mail.service';
-import { MailEntities } from './entities/mail.entities';
+import { MailController } from './controllers/mail.controller';
+import { MailService } from './services/mail.service';
+import { MailEntities } from '../../database/entities/mail.entities';
 
 @Module({
   imports: [

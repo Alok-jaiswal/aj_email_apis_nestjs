@@ -1,40 +1,52 @@
+import { Config } from './config/app.config';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { MailModule } from './mail/mail.module';
-import { MailEntities } from './mail/entities/mail.entities';
+import { MailModule } from './api/mail/mail.module';
+import { MailEntities } from './database/entities/mail.entities';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
-import { EmailtemplateModule } from './emailtemplate/emailtemplate.module';
-import { Emailtemplate } from './emailtemplate/entities/emailtemplate.entity';
+import { EmailtemplateModule } from './api/emailtemplate/emailtemplate.module';
+import { Emailtemplate } from './database/entities/emailtemplate.entity';
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: [
-        // '.local.env',
-        '.prod.env',
-      ],
+      // envFilePath: [
+      //   '.local.env',
+      // ],
     }),
 
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: (configService: ConfigService) => ({
-        type: 'postgres',
-        host: configService.get('DB_HOST'),
-        port: configService.get<number>('DB_PORT'),
-        username: configService.get('DB_USERNAME'),
-        password: configService.get('DB_PASSWORD'),
-        synchronize: configService.get<boolean>('DB_SYNC'),
-        logging: configService.get<boolean>('DB_LOGGING'),
-        database: configService.get('DB_NAME'),
-        // entities: [__dirname + '/**/*.entity{.ts,.js}'],
-        entities: [MailEntities, Emailtemplate],
-      }),
+      useFactory: (config: ConfigService) => {
+        const appConfig = new Config(config);
+        const dbConfig = appConfig.getDBConfigurationOnlineAdmission();
+        return {
+          type: 'postgres',
+          host: dbConfig.host,
+          port: dbConfig.port,
+          username: dbConfig.username,
+          password:  dbConfig.password,
+          database:  dbConfig.database,
+          synchronize: false,
+          logging:true,
+          migrationsRun: false,
+          // entities: [__dirname + '/**/*.entity{.ts,.js}'],
+          entities: [MailEntities, Emailtemplate],
+          namingStrategy: new SnakeNamingStrategy(),
+          migrationsTransactionMode: 'all',
+          cli: {
+            entitiesDir: 'src/database/entities',
+            migrationsDir: 'src/database/migrations',
+          },
+        };
+      },
     }),
 
     MailModule,
