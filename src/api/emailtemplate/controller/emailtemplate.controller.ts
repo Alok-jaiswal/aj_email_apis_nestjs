@@ -1,9 +1,11 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { EmailtemplateService } from './emailtemplate.service';
-import { CreateEmailtemplateDto } from './dto/create-emailtemplate.dto';
-import { UpdateEmailtemplateDto } from './dto/update-emailtemplate.dto';
+import { EmailtemplateService } from '../services/emailtemplate.service';
+import { CreateEmailtemplateDto } from '../dto/create-emailtemplate.dto';
+import { UpdateEmailtemplateDto } from '../dto/update-emailtemplate.dto';
+import {ApiTags} from '@nestjs/swagger'
 
 @Controller('emailtemplate')
+@ApiTags('templateSending')
 export class EmailtemplateController {
   constructor(private readonly emailtemplateService: EmailtemplateService) {}
 

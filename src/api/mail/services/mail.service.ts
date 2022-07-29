@@ -1,5 +1,5 @@
-import { MailEntities } from './entities/mail.entities';
-import { CreateMailDto } from './dto/create-mail.dto';
+import { MailEntities } from '../../../database/entities/mail.entities';
+import { CreateMailDto } from '../dto/create-mail.dto';
 import { MailerService } from '@nestjs-modules/mailer';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';

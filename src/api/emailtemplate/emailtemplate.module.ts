@@ -1,8 +1,8 @@
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';
-import { EmailtemplateService } from './emailtemplate.service';
-import { EmailtemplateController } from './emailtemplate.controller';
-import { Emailtemplate } from './entities/emailtemplate.entity';
+import { EmailtemplateService } from './services/emailtemplate.service';
+import { EmailtemplateController } from './controller/emailtemplate.controller';
+import { Emailtemplate } from '../../database/entities/emailtemplate.entity';
 
 @Module({
   imports:[TypeOrmModule.forFeature([Emailtemplate])],
