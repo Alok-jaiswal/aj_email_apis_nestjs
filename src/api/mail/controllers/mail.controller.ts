@@ -31,6 +31,12 @@ export class MailController {
     return allMail;
   }
 
+  @Get('/getAllMailId')
+  async getMailId() {
+    const allMailId = await this.mailService.getMailId();
+    return allMailId;
+  }
+
   @Get('/getMailById/:id')
   async getMailById(@Param('id') id: number) {
     const getMailById = await this.mailService.getMailById(id);

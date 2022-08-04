@@ -21,7 +21,7 @@ import { MailEntities } from '../../database/entities/mail.entities';
           },
         },
         defaults: {
-          from: config.get('EMAIL_ID'),
+          from:`"NO Reply" <${config.get('EMAIL_ID')}>`,
         },
         // preview: true,
         template: {

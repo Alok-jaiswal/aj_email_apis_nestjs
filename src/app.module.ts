@@ -1,16 +1,17 @@
 import { Config } from './config/app.config';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MailModule } from './api/mail/mail.module';
 import { MailEntities } from './database/entities/mail.entities';
 import { AuthModule } from './auth/auth.module';
-import { UserModule } from './user/user.module';
+import { UserModule } from './api/user/user.module';
 import { EmailtemplateModule } from './api/emailtemplate/emailtemplate.module';
 import { Emailtemplate } from './database/entities/emailtemplate.entity';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
+import { UserEntity } from './database/entities/user.entity';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -20,6 +21,10 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
       //   '.local.env',
       // ],
     }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'public'),
+      exclude: ['/*'],
+  }),
 
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -38,7 +43,7 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
           logging:true,
           migrationsRun: false,
           // entities: [__dirname + '/**/*.entity{.ts,.js}'],
-          entities: [MailEntities, Emailtemplate],
+          entities: [MailEntities, Emailtemplate,UserEntity],
           namingStrategy: new SnakeNamingStrategy(),
           migrationsTransactionMode: 'all',
           cli: {
@@ -56,8 +61,9 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
     UserModule,
 
     EmailtemplateModule,
+
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}

@@ -26,12 +26,13 @@ export class MailService {
     //   createMailDto.name,
     //   createMailDto.subject,
     // );
+    console.log(createMailDto.email);
     const funSend = await this.mailerService
       .sendMail({
         to: createMailDto.email,
         subject: createMailDto.subject,
         // template: "src/templates/email.hbs", //fro send static template
-        html:`${createMailDto.template}`,      //to send dynamic template
+        html: `${createMailDto.template}`, //to send dynamic template
         context: {
           name: createMailDto.name,
         },
@@ -55,17 +56,27 @@ export class MailService {
   }
 
   async getMail() {
-    const allMail = this.mailRepository.find();
+    const allMail = await this.mailRepository.find();
     return allMail;
   }
 
-  async getMailById(id:number){
-    const mailById = this.mailRepository.findOne({where:{id}})
+  async getMailId() {
+    try {
+      const res = await this.mailRepository.find({select:['email']});
+      const value =[...new Set(res)]
+      return value;
+    } catch (ex) {
+      return `error occurs ${ex}`;
+    }
+  }
+
+  async getMailById(id: number) {
+    const mailById = this.mailRepository.findOne({ where: { id } });
     return mailById;
   }
 
-  async deleteMailById(id:number){
-    const delMail=this.mailRepository.delete(id);
+  async deleteMailById(id: number) {
+    const delMail = this.mailRepository.delete(id);
     return delMail;
   }
 }

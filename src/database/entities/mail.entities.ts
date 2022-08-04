@@ -8,8 +8,8 @@ export class MailEntities{
     @Column()
     template:string;
 
-    @Column()
-    email:string;
+    @Column('text',{array:true})
+    email:string[];
 
     @Column()
     name:string;

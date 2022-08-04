@@ -1,17 +1,22 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsString } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateMailDto {
   @ApiProperty()
   @IsString()
   template: string;
 
-  @IsEmail()
-  email:string;
+  // @IsEmail({each:true})
+  @ApiProperty()
+  @IsString({ each: true })
+  @IsNotEmpty()
+  email: string[];
 
+  @ApiProperty()
   @IsString()
-  name:string;
-
+  name: string;
+  
+  @ApiProperty()
   @IsString()
-  subject:string;
+  subject: string;
 }
